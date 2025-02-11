@@ -1,0 +1,20 @@
+% thesis/main/main.tex
+\documentclass{../style/pwthesis}
+\usepackage{subfiles}  % umożliwia kompilację rozdziałów standalone
+
+\input{../style/pwthesis.cfg}  % Plik konfiguracyjny
+\input{../../metadata/metadata.tex} % Dane meta
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+
+\begin{document}
+
+\input{../titlepage/titlepage.tex}
+\tableofcontents
+
+\subfile{../chapters/wprowadzenie.tex}
+
+\end{document}

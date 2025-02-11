@@ -1,52 +1,17 @@
-# Prerequisites
-*.d
+# Ignoruj katalog build-latex (wyniki kompilacji)
+build-latex/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
+# Pliki tymczasowe LaTeX
+*.aux
+*.log
+*.toc
 *.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+*.bcf
+*.blg
+*.bbl
+*.fdb_latexmk
+*.fls
+*.run.xml
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Ewentualnie ignoruj PDF, jeśli nie chcesz go wersjonować
+# *.pdf

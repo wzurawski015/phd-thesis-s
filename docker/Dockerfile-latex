@@ -1,0 +1,32 @@
+# docker/Dockerfile-latex
+FROM debian:12.9
+
+RUN apt-get update && apt-get install -y \
+    make \
+    wget \
+    xz-utils \
+    perl \
+    python3 \
+    ghostscript \
+    fontconfig \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalacja TeX Live (scheme medium), latexmk, biber
+RUN mkdir /tmp/install-texlive \
+    && cd /tmp/install-texlive \
+    && wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
+    && tar -xzf install-tl-unx.tar.gz \
+    && cd install-tl-* \
+    && echo "selected_scheme scheme-medium" > texlive.profile \
+    && echo "TEXDIR /usr/local/texlive" >> texlive.profile \
+    && echo "install_docfiles 0" >> texlive.profile \
+    && echo "install_srcfiles 0" >> texlive.profile \
+    && ./install-tl -profile texlive.profile \
+    && rm -rf /tmp/install-texlive
+
+ENV PATH="/usr/local/texlive/bin/x86_64-linux:$PATH"
+RUN tlmgr update --self
+RUN tlmgr install latexmk xetex biblatex biber
+
+WORKDIR /doc
+CMD ["bash"]

@@ -1,0 +1,17 @@
+# docker-compose/docker-compose.yml
+version: '3.8'
+
+services:
+  latex:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-latex
+    volumes:
+      - ../:/doc
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-app
+    volumes:
+      - ../:/app

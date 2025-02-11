@@ -1,0 +1,45 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker images (Compose)
+        run: docker compose -f docker-compose/docker-compose.yml build
+
+      - name: Compile LaTeX
+        run: |
+          docker compose -f docker-compose/docker-compose.yml run --rm latex \
+            latexmk -pdf -xelatex -interaction=nonstopmode -outdir=build-latex \
+            thesis/main/main.tex
+
+      - name: Test app
+        run: |
+          docker compose -f docker-compose/docker-compose.yml run --rm app \
+            bash -c "echo '[Placeholder] Testy w C/C++/Python...'"
+
+      - name: Generate Doxygen docs
+        run: |
+          docker compose -f docker-compose/docker-compose.yml run --rm app \
+            doxygen docs/doxygen/Doxyfile
+
+      - name: Upload main.pdf artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: thesis-pdf
+          path: build-latex/main.pdf
+
+      - name: Upload Doxygen docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: doxygen-docs
+          path: docs/doxygen/out
